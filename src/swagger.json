@@ -1,0 +1,259 @@
+{
+	"openapi": "3.0.0",
+	"info" : {
+		"title": "User management documentation",
+		"description": "This is an API of user management",
+		"version": "1.0.0",
+		"contact": {
+			"email": "victornfb@outlook.com"
+		}
+	},
+	"paths": {
+		"/users": {
+			"post": {
+				"tags": ["User"],
+				"summary": "Create a user",
+				"description": "Create a new user",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"email": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "User name example",
+									"email": "User email example"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"400": {
+						"description": "User already exists",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			},
+			"get": {
+				"tags": ["User"],
+				"summary": "List all users",
+				"description": "List all users",
+				"parameters": [
+					{
+						"in": "header",
+						"name": "user_id",
+						"description": "User ID",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"id": {
+												"type": "string"
+											},
+											"name": {
+												"type": "string"
+											},
+											"admin": {
+												"type": "boolean"
+											},
+											"email": {
+												"type": "string"
+											},
+											"created_at": {
+												"type": "string"
+											},
+											"updated_at": {
+												"type": "string"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"400": {
+						"description": "User not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{id}": {
+			"get": {
+				"tags": ["User"],
+				"summary": "Get user by ID",
+				"description": "Get user by ID",
+				"parameters": [
+					{
+						"in": "query",
+						"name": "user_id",
+						"description": "User ID",
+						"required": true,
+						"schema": {
+							"type": "string",
+							"format": "uuid"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "Success",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"id": {
+											"type": "string"
+										},
+										"name": {
+											"type": "string"
+										},
+										"admin": {
+											"type": "boolean"
+										},
+										"email": {
+											"type": "string"
+										},
+										"created_at": {
+											"type": "string"
+										},
+										"updated_at": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "User not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		},
+		"/users/{id}/admin": {
+			"patch": {
+				"tags": ["User"],
+				"summary": "Update a user admin status",
+				"description": "Update a user admin status",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"user_id": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"user_id": "User id example"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"200": {
+						"description": "Created",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {
+										"type": "object",
+										"properties": {
+											"name": {
+												"type": "string"
+											},
+											"email": {
+												"type": "string"
+											},
+											"admin": {
+												"type": "boolean"
+											}
+										}
+									}
+								}
+							}
+						}
+					},
+					"404": {
+						"description": "User not found",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"properties": {
+										"error": {
+											"type": "string"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
